@@ -1,11 +1,13 @@
 package com.example.appselfie;
 import android.graphics.Bitmap;
+
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Image {
+public class Image implements Serializable {
     private String imageName;
     private Bitmap imageItem;
 

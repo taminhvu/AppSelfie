@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent,REQUEST_CODE);
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Image image = images.get(i);
+                Intent intent = new Intent(getApplicationContext(), ZoomActivity.class);
+                intent.putExtra("dulieu", image.getImageItem());
+                startActivity(intent);
+            }
+        });
     }
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data) {
@@ -52,4 +62,5 @@ public class MainActivity extends AppCompatActivity {
         customAdapter = new CustomAdapter(this,R.layout.activity_listview, images);
         listView.setAdapter(customAdapter);
     }
+
 }
