@@ -8,31 +8,38 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Image implements Serializable {
-    private String imageName;
-    private Bitmap imageItem;
+    private  int id;
+    private String ten;
+    private byte[] hinhAnh;
 
-    public Image(Bitmap imageItem){
-        this.imageName = convertDateToString();
-        this.imageItem = imageItem;
+    public Image(int id, String ten, byte[] hinhAnh) {
+        this.id = id;
+        this.ten = ten;
+        this.hinhAnh = hinhAnh;
     }
 
-    public String convertDateToString(){
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
-        String strDate = dateFormat.format(date);
-        return strDate;
+    public int getId() {
+        return id;
     }
 
-    public void setImageName(Bitmap imageItem){
-        this.imageItem = imageItem;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Bitmap getImageItem(){
-        return imageItem;
+    public String getTen() {
+        return ten;
     }
 
-    public String getImageName(){
-        return imageName;
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+
+    public byte[] getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(byte[] hinhAnh) {
+        this.hinhAnh = hinhAnh;
     }
 }
 
