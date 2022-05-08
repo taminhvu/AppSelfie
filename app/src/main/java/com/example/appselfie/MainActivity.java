@@ -2,12 +2,17 @@ package com.example.appselfie;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -25,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private ListView listView;
@@ -119,5 +126,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         dialogxoa.show();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sendNotification();
+    }
+
+    private void sendNotification() {
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.camera);
+                Notification notification = new NotificationCompat.Builder(MainActivity.this, MyNotification.CHANNEL_ID)
+                        .setContentTitle("Daily Selfie")
+                        .setContentText("Cùng chụp một tấm Selfie nào!")
+                        .setSmallIcon(R.drawable.camera)
+                        .setLargeIcon(bitmap)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .build();
+                NotificationManagerCompat.from(MainActivity.this).notify(1, notification);
+            }
+        },3000);
     }
 }
